@@ -1,0 +1,34 @@
+version: '2'
+
+volumes:
+  redis:
+
+services:
+  postgres:
+    image: library/postgres:9.5
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: database_development
+
+  redis:
+    image: library/redis:4.0.2
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis:/data
+
+  pgadmin:
+    image: chorss/docker-pgadmin4
+    depends_on:
+      - postgres
+    links:
+      - postgres:postgres
+    ports:
+      - '5050:5050'
+    environment:
+      SERVER_MODE: 'no'

@@ -1,8 +1,7 @@
-const express = require('express');
-const app = express();
+import 'validate';
+import models from 'models/index';
+import server from 'server';
 
-const index = require('./routes/index.js');
-
-app.get('/', index);
-
-app.listen(3000, () => console.log(`Open http://localhost:3000 to see a response.`));
+server.listen(3000, () =>
+  console.log(`Open http://localhost:3000 to see a response.`)
+);
